@@ -9,7 +9,9 @@ from downloader import download_instagram_video
 
 load_dotenv()  # Load environment variables from .env file
 
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")   
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+if TELEGRAM_BOT_TOKEN is None:
+    raise ValueError("TELEGRAM_BOT_TOKEN environment variable is not set.")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if update.message:
@@ -49,10 +51,6 @@ def is_instagram_post_url(text: str) -> bool:
     """
     pattern = r"(https?://)?(www\.)?instagram\.com/(p|reel)/[A-Za-z0-9_\-]+/?"
     return re.search(pattern, text) is not None
-
-
-
-
 
 
 # Main bot setup
