@@ -1,7 +1,7 @@
 import yt_dlp
 import os
 
-def download_instagram_video(url: str, output_dir="downloads") -> tuple[str, str, str]:
+def download_instagram_video(url: str, output_dir="downloads") -> tuple[str, str, str, str]:
     """
     Downloads the Instagram video and extracts the caption.
 
@@ -27,7 +27,8 @@ def download_instagram_video(url: str, output_dir="downloads") -> tuple[str, str
             file_ext = info.get("ext", "mp4")
             video_id = info.get("id", "video")
             filename = os.path.join(output_dir, f"{video_id}.{file_ext}")
-            page_name = info.get("uploader", "Instagram User") # Optional: Get the uploader's name
-            return filename, caption, page_name
+            Instagram_user = info.get("uploader", "Instagram User") # Optional: Get the uploader's name
+            Instagram_id = info.get("uploader_id", "Instagram ID") # Optional: Get the uploader's ID
+            return filename, caption, Instagram_user, Instagram_id
         else:
-            return "", "", ""
+            return "", "", "", ""  # Return empty strings if extraction fails
