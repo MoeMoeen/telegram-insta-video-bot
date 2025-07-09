@@ -25,7 +25,7 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             await update.message.reply_text("📸 Processing your Instagram post URL...")
             
             try:
-                video_filepath, caption = download_instagram_video(user_message)
+                video_filepath, caption, page_name = download_instagram_video(user_message)
                 
                 if not caption:
                     caption = "No caption available for this post."
@@ -33,7 +33,7 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 if video_filepath:
                     with open(video_filepath, 'rb') as video_file:
                         await update.message.reply_video(video_file, caption=caption[:1024])  # Limit caption to 1024 characters
-                    await update.message.reply_text(f"Caption: {caption}")
+                    await update.message.reply_text(f"Caption: {caption} \n Page: {page_name}")
 
                     # os.remove(video_filepath)  # Clean up the downloaded file
                 else:
